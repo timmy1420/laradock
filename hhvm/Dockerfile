@@ -10,8 +10,7 @@ RUN apt-get update -y \
     && add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc) main" \
     && apt-get update -y \
     && apt-get install -y hhvm \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean
 
 RUN mkdir -p /var/www
 

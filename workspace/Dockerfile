@@ -52,7 +52,6 @@ COPY ./sources.sh /tmp/sources.sh
 
 RUN if [ ${CHANGE_SOURCE} = true ]; then \
     /bin/sh -c /tmp/sources.sh && \
-    rm -rf /tmp/sources.sh \
 ;fi
 
 # always run apt update when start and after add new source list, then clean up at end.
@@ -608,7 +607,6 @@ RUN if [ ${INSTALL_IONCUBE} = true ]; then \
     && tar zxpf /tmp/ioncube_loaders_lin_x86-64.tar.gz -C /tmp \
     && mv /tmp/ioncube/ioncube_loader_lin_${LARADOCK_PHP_VERSION}.so $(php -r "echo ini_get('extension_dir');")/ioncube_loader.so \
     && echo "zend_extension=ioncube_loader.so" >> /etc/php/${LARADOCK_PHP_VERSION}/mods-available/0ioncube.ini \
-    && rm -rf /tmp/ioncube* \
 ;fi
 
 ###########################################################################
@@ -811,7 +809,6 @@ RUN if [ ${INSTALL_OCI8} = true ]; then \
       && ln -s /opt/oracle/instantclient_12_1/libclntsh.so.12.1 /opt/oracle/instantclient_12_1/libclntsh.so \
       && ln -s /opt/oracle/instantclient_12_1/libclntshcore.so.12.1 /opt/oracle/instantclient_12_1/libclntshcore.so \
       && ln -s /opt/oracle/instantclient_12_1/libocci.so.12.1 /opt/oracle/instantclient_12_1/libocci.so \
-      && rm -rf /opt/oracle/*.zip \
   # Install PHP extensions deps
   && apt-get update \
       && apt-get install --no-install-recommends -y \
@@ -1158,7 +1155,6 @@ RUN if [ $INSTALL_PHALCON = true ]; then \
     && ./install \
     && echo "extension=phalcon.so" >> /etc/php/${LARADOCK_PHP_VERSION}/mods-available/phalcon.ini \
     && ln -s /etc/php/${LARADOCK_PHP_VERSION}/mods-available/phalcon.ini /etc/php/${LARADOCK_PHP_VERSION}/cli/conf.d/30-phalcon.ini \
-    && rm -rf /tmp/cphalcon* \
 ;fi
 
 ###########################################################################
@@ -1269,9 +1265,7 @@ RUN set -xe; php -v | head -n 1 | grep -q "PHP ${LARADOCK_PHP_VERSION}."
 USER root
 
 # Clean up
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    rm /var/log/lastlog /var/log/faillog
+RUN apt-get clean
 
 # Set default work directory
 WORKDIR /var/www

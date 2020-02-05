@@ -8,8 +8,7 @@ VOLUME /data/rethinkdb_data
 RUN apt-get -y update \
     && apt-get -y upgrade \
     && apt-get -y install python-pip \
-    && pip install rethinkdb \
-    && rm -rf /var/lib/apt/lists/*
+    && pip install rethinkdb
 
 RUN cp /etc/rethinkdb/default.conf.sample /etc/rethinkdb/instances.d/instance1.conf
 

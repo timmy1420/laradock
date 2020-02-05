@@ -147,7 +147,6 @@ RUN if [ $INSTALL_PHALCON = true ]; then \
     && unzip -d /tmp/ /tmp/cphalcon.zip \
     && cd /tmp/cphalcon-${PHALCON_VERSION}/build \
     && ./install \
-    && rm -rf /tmp/cphalcon* \
 ;fi
 
 ARG INSTALL_GHOSTSCRIPT=false
@@ -167,7 +166,6 @@ ARG INSTALL_REDIS=false
 RUN if [ ${INSTALL_REDIS} = true ]; then \
     # Install Redis Extension
     printf "\n" | pecl install -o -f redis \
-    &&  rm -rf /tmp/pear \
     &&  docker-php-ext-enable redis \
 ;fi
 

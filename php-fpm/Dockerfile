@@ -233,7 +233,6 @@ RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
     else \
       pecl install -o -f redis; \
     fi \
-    && rm -rf /tmp/pear \
     && docker-php-ext-enable redis \
 ;fi
 
@@ -497,7 +496,6 @@ RUN if [ ${INSTALL_OCI8} = true ]; then \
         && ln -s /opt/oracle/instantclient_12_1/libclntsh.so.12.1 /opt/oracle/instantclient_12_1/libclntsh.so \
         && ln -s /opt/oracle/instantclient_12_1/libclntshcore.so.12.1 /opt/oracle/instantclient_12_1/libclntshcore.so \
         && ln -s /opt/oracle/instantclient_12_1/libocci.so.12.1 /opt/oracle/instantclient_12_1/libocci.so \
-        && rm -rf /opt/oracle/*.zip \
     # Install PHP extensions deps
     && apt-get update \
         && apt-get install --no-install-recommends -y \
@@ -529,7 +527,6 @@ RUN if [ ${INSTALL_IONCUBE} = true ]; then \
     && tar zxpf /tmp/ioncube_loaders_lin_x86-64.tar.gz -C /tmp \
     && mv /tmp/ioncube/ioncube_loader_lin_${LARADOCK_PHP_VERSION}.so $(php -r "echo ini_get('extension_dir');")/ioncube_loader.so \
     && printf "zend_extension=ioncube_loader.so\n" > $PHP_INI_DIR/conf.d/0ioncube.ini \
-    && rm -rf /tmp/ioncube* \
 ;fi
 
 ###########################################################################
@@ -715,7 +712,6 @@ RUN if [ $INSTALL_PHALCON = true ]; then \
     && cd /tmp/cphalcon-${LARADOCK_PHALCON_VERSION}/build \
     && ./install \
     && mv /usr/local/etc/php/conf.d/phalcon.ini.disable /usr/local/etc/php/conf.d/phalcon.ini \
-    && rm -rf /tmp/cphalcon* \
 ;fi
 
 ###########################################################################
@@ -855,7 +851,6 @@ ARG INSTALL_MAILPARSE=false
 RUN if [ ${INSTALL_MAILPARSE} = true ]; then \
     # Install mailparse extension
     printf "\n" | pecl install -o -f mailparse \
-    &&  rm -rf /tmp/pear \
     &&  docker-php-ext-enable mailparse \
 ;fi
 
@@ -893,9 +888,7 @@ COPY ./xlaravel.pool.conf /usr/local/etc/php-fpm.d/
 USER root
 
 # Clean up
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    rm /var/log/lastlog /var/log/faillog
+RUN apt-get clean
 
 # Configure non-root user.
 ARG PUID=1000

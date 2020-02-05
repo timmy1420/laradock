@@ -2,6 +2,19 @@
     <img src="/.github/home-page-images/laradock-logo.jpg?raw=true" alt="Laradock Logo"/>
 </p>
 
+# Forked Changelog
+Using older kernel versions on RedHat and/or CentOS, would be causing one of following errors when installing laradock:
+```
+rm: cannot remove '/tmp/pear/temp': Directory not empty
+rm: cannot remove '/tmp/pear/cache': Directory not empty
+rm: cannot remove '/tmp/pear/download': Directory not empty
+rm: cannot remove '/tmp/v8-compile-cache-1000/7.9.317.25-node.28': Directory not empty
+ERROR: Service 'workspace' failed to build: The command '/bin/sh -c apt-get clean &&     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* &&     rm /var/log/lastlog /var/log/faillog' returned a non-zero code: 1
+
+```
+
+Because of this, I removed all the code portions that would delete temporary folders. This has been tested on CentOS 7.7 with kernel 3.10
+
 ---
 
 <p align="center"><b>Full PHP development environment based on Docker.</b></p>

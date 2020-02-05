@@ -9,9 +9,8 @@ RUN mv /tmp/beanstalk_console-master /source
 
 RUN apt-get remove --purge -y curl && \
     apt-get autoclean && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
+    apt-get clean
+    
 EXPOSE 2080
 
 CMD bash -c 'BEANSTALK_SERVERS=$BEANSTALKD_PORT_11300_TCP_ADDR:11300 php -S 0.0.0.0:2080 -t /source/public'
